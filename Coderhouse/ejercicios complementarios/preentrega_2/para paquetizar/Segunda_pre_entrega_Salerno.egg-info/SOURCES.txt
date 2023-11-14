@@ -1,0 +1,10 @@
+setup.py
+Segunda_pre_entrega_Salerno.egg-info/PKG-INFO
+Segunda_pre_entrega_Salerno.egg-info/SOURCES.txt
+Segunda_pre_entrega_Salerno.egg-info/dependency_links.txt
+Segunda_pre_entrega_Salerno.egg-info/top_level.txt
+preentrega2salerno/__init__.py
+preentrega2salerno/clases.py
+preentrega2salerno/funciones.py
+preentrega2salerno/main.py
+preentrega2salerno/Primera_preentrega_Salerno/preentrega1.py

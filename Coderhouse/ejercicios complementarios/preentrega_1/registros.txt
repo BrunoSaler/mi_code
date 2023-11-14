@@ -1,0 +1,4 @@
+0: {'usuario': 'BRUNO', 'contraseña': '123'}
+1: {'usuario': 'PEPE', 'contraseña': '456'}
+2: {'usuario': 'COCO', 'contraseña': '789'}
+3: {'usuario': 'LAUCHA', 'contraseña': '741'}
