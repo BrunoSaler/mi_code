@@ -2,7 +2,7 @@ from django.shortcuts import render
 from datetime import date
 
 def view_bienvenida(request):
-    return render(request, "act3/welcome.html")
+    return render(request, "act3/welcome.html")#aca el template es estático
 
 def view_autor(request):
     nombre = "Bruno"
@@ -13,4 +13,4 @@ def view_autor(request):
         'apellido': apellido,
         'fecha': fecha,
     }  # Para enviar al contexto
-    return render(request, "act3/autor.html", diccionario)
+    return render(request, "act3/autor.html", diccionario)#aca le paso datos al template
