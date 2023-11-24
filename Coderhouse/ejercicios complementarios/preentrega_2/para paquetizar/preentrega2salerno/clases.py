@@ -1,5 +1,5 @@
 from datetime import datetime
-from .funciones import *
+from funciones import *
 import json
 
 class usuario:                                                                          
@@ -16,10 +16,10 @@ class usuario:
         print(f"Password: {self.password}")
         print(f"Fecha de nacimiento: {self.nacimiento}")
 
-    def edad(self, nacimiento2):                                                        #me calcula cuantos años tiene el usuario
-        edad=datetime.now()-nacimiento2       #esta resta da como resultado en days, nacimiento2 es la fecha de cacimiento sin aplicar date_format
-        edad=edad/365
-        return edad.days                      #devuelvo solo los dias,sin minutos ni segundos
+    def edad(self, nacimiento2):  
+        hoy=datetime.today()                                                      #me calcula cuantos años tiene el usuario
+        edad=hoy.year-nacimiento2.year-((hoy.month,hoy.day)<(nacimiento2.month,nacimiento2.day))      #esta resta da como resultado en days, nacimiento2 es la fecha de cacimiento sin aplicar date_format
+        return edad
     
     def __str__(self):                                                                  #devuelve el nombre del usuario
         return self.nombre
