@@ -1,11 +1,38 @@
 from django.db import models
 
-category=[
+category=(
     (1, 'Línea Blanca'),
     (2, 'Electrodoméstico'),
     (3, 'Informática'),
-    (4, 'Pendiente')
-]
+)
+
+prov=(
+    (1, 'Buenos Aires'),
+    (2, 'C.A.B.A.'),
+    (3, 'Catamarca'),
+    (4, 'Chaco'),
+    (5, 'Chubut'),
+    (6, 'Córdoba'),
+    (7, 'Corrientes'),
+    (8, 'Entre Ríos'),
+    (9, 'Formosa'),
+    (10, 'Jujuy'),
+    (11, 'La Pampa'),
+    (12, 'La Rioja'),
+    (13, 'Mendoza'),
+    (14, 'Misiones'),
+    (15, 'Neuquén'),
+    (16, 'Río Negro'),
+    (17, 'Salta'),
+    (18, 'San Juan'),
+    (19, 'San Luis'),
+    (20, 'Santa Cruz'),
+    (21, 'Santa Fe'),
+    (22, 'Santiago del Estero'),
+    (23, 'Tierra del Fuego'),
+    (24, 'Tucumán'),
+    (25, 'Islas Malvinas'),
+)
 
 # Create your models here.
 class usuario(models.Model):
@@ -20,7 +47,7 @@ class usuario(models.Model):
 
 class producto(models.Model):
     producto = models.CharField(max_length=100)
-    categoria = models.IntegerField(choices=category, default=4)
+    categoria = models.IntegerField(choices=category)
     #cant_disponible = models.IntegerField()
     marca = models.CharField(max_length=100)
     modelo = models.CharField(max_length=100, unique=True)
@@ -33,8 +60,8 @@ class compras(models.Model):
     usuario = models.ForeignKey(usuario, null=True, on_delete=models.SET_NULL)
     fecha_compra = models.DateField()
     producto = models.ForeignKey(producto, on_delete=models.PROTECT)
-    dir_envio = models.CharField(max_length=1000, default="Pendiente")
-    provincia_envio = models.CharField(max_length=100, default="Pendiente")
+    dir_envio = models.CharField(max_length=1000)
+    provincia_envio = models.IntegerField(choices=prov)
 
 
 
