@@ -1,10 +1,10 @@
 from django.db import models
 
 category=[
-    ("1", 'Línea Blanca'),
-    ("2", 'Electrodoméstico'),
-    ("3", 'Informática'),
-    ("4", 'Pendiente')
+    (1, 'Línea Blanca'),
+    (2, 'Electrodoméstico'),
+    (3, 'Informática'),
+    (4, 'Pendiente')
 ]
 
 # Create your models here.
@@ -33,6 +33,8 @@ class compras(models.Model):
     usuario = models.ForeignKey(usuario, null=True, on_delete=models.SET_NULL)
     fecha_compra = models.DateField()
     producto = models.ForeignKey(producto, on_delete=models.PROTECT)
+    dir_envio = models.CharField(max_length=1000, default="Pendiente")
+    provincia_envio = models.CharField(max_length=100, default="Pendiente")
 
 
 
