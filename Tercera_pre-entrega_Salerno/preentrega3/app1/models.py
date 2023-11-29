@@ -35,7 +35,7 @@ prov=(
 )
 
 # Create your models here.
-class usuario(models.Model):
+class Usuario(models.Model):
     nombre = models.CharField(max_length=100)
     email = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
@@ -45,7 +45,7 @@ class usuario(models.Model):
     def __str__(self):
         return self.email
 
-class producto(models.Model):
+class Producto(models.Model):
     producto = models.CharField(max_length=100)
     categoria = models.IntegerField(choices=category)
     #cant_disponible = models.IntegerField()
@@ -56,10 +56,10 @@ class producto(models.Model):
     def __str__(self):
         return self.modelo
 
-class compras(models.Model):
-    usuario = models.ForeignKey(usuario, null=True, on_delete=models.SET_NULL)
+class Compras(models.Model):
+    usuario = models.ForeignKey(Usuario, null=True, on_delete=models.SET_NULL)
     fecha_compra = models.DateField()
-    producto = models.ForeignKey(producto, on_delete=models.PROTECT)
+    producto = models.ForeignKey(Producto, on_delete=models.PROTECT)
     dir_envio = models.CharField(max_length=1000)
     provincia_envio = models.IntegerField(choices=prov)
 
