@@ -9,5 +9,6 @@ class UsuarioForm(forms.ModelForm):
         fields = ["nombre", "email", "password", "nacimiento", "telefono"]
         labels = {'telefono': ('Teléfono'),}
         widgets = {
-            "nacimiento": forms.DateInput(attrs={'type': 'date', 'placeholder': 'dd-mm-yyyy', 'class': 'form-control'})
+            "nacimiento": forms.DateInput(attrs={'type': 'date', 'placeholder': 'dd-mm-yyyy', 'class': 'form-control'}),
+            "password": forms.PasswordInput()
         }
