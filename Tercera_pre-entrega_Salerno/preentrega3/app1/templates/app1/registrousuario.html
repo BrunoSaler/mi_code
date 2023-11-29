@@ -1,13 +1,14 @@
 {% extends "app1/index.html" %}
-
-{% block title %}
-    <h1>Registro</h1>>
-{% endblock title %}
+{% load crispy_forms_tags %}
 
 {% block content %}
+    <h1>Registro</h1>
+    <br><br>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Guardar</button>
+        {{form|crispy}}
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <br><br>
+        <p>* Campo requerido</p>
     </form>
 {% endblock content %}
