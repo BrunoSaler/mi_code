@@ -40,7 +40,7 @@ class Usuario(models.Model):
     email = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
     nacimiento = models.DateField()
-    phone = models.CharField(max_length=100)
+    telefono = models.CharField(max_length=100)
 
     def __str__(self):
         return self.email

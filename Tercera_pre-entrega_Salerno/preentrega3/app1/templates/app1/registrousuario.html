@@ -2,6 +2,15 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <h1>Registro</h1>
     <br><br>
     <form method="post">
