@@ -2,7 +2,7 @@ from time import sleep
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from datetime import date
-from . import forms
+from . import forms, models
 
 
 def crear(request):
@@ -46,3 +46,24 @@ def view_registrar_usuario(request):
     else:
         form = forms.UsuarioForm()
     return render(request, "app1/registrousuario.html", {"form": form})
+
+def view_login(request):
+    if request.method == "POST":
+        form = forms.LoginForm(request.POST)
+        if form.is_valid():
+            email = request.POST['email']
+            password = request.POST['password']
+            user = models.Usuario.objects.filter(email__contains=email, password__contains=password)
+            if user:
+                messages.success(request, "Login exitoso.")
+                return redirect("/login")
+            else:
+                messages.error(request, "Usuario no registrado.")
+                return redirect("/login")
+        else:
+            messages.error(request, "Intentelo nuevamente en unos minutos.")
+            return redirect("/login")
+    else:
+        form = forms.LoginForm()
+    return render(request, "app1/login.html", {"form": form})
+    

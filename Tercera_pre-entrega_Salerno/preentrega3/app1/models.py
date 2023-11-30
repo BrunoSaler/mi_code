@@ -48,7 +48,6 @@ class Usuario(models.Model):
 class Producto(models.Model):
     producto = models.CharField(max_length=100)
     categoria = models.IntegerField(choices=category)
-    #cant_disponible = models.IntegerField()
     marca = models.CharField(max_length=100)
     modelo = models.CharField(max_length=100, unique=True)
     precio = models.DecimalField(decimal_places=2, max_digits=9)
