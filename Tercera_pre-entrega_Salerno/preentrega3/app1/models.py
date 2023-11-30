@@ -37,7 +37,7 @@ prov=(
 # Create your models here.
 class Usuario(models.Model):
     nombre = models.CharField(max_length=100, blank=False, null=False)
-    email = models.CharField(max_length=100, unique=True, blank=False, null=False)
+    email = models.EmailField(max_length=254, unique=True, blank=False, null=False)
     password = models.CharField(max_length=100, blank=False, null=False)
     nacimiento = models.DateField(blank=False, null=False)
     telefono = models.CharField(max_length=100, blank=False, null=False)
