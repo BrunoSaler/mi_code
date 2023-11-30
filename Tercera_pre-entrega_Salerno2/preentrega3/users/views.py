@@ -1,9 +1,10 @@
-from time import sleep
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
 from datetime import date
 from . import forms, models
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+
 
 def date_format(date):
     months = ("Enero", "Febrero", "Marzo", "Abri", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre")
@@ -21,13 +22,15 @@ def view_bienvenida(request):
         'apellido': apellido,
         'fecha': fecha,
     }  # Para enviar al contexto
-    return render(request, "app1/welcome.html", diccionario)
+    return render(request, "users/welcome.html", diccionario)
+
 
 def view_registrar_usuario(request):
     if request.method == "POST":
         form = forms.UsuarioForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = models.Usuario(nombre=request.POST['nombre'], email=request.POST['email'], password=request.POST['password'], nacimiento=request.POST['nacimiento'], telefono=request.POST['telefono'], is_active=True)
+            user.save()
             messages.success(request, "Te has registrado correctamente.")
             return redirect("/registro")
         else:
@@ -38,30 +41,6 @@ def view_registrar_usuario(request):
     return render(request, "registration/registrousuario.html", {"form": form})
 
 def view_login(request):
-    if request.method == "POST":
-        form = forms.LoginForm(request.POST)
-        if form.is_valid():
-            email = request.POST['email']
-            password = request.POST['password']
-            try:
-                user = models.Usuario.objects.get(email__exact=email)
-                if ((user is not None) and (user.password==password)):
-                    messages.success(request, "Login exitoso.")
-                    return redirect("/login")
-                else:
-                    messages.error(request, "Contraseña errónea.")
-                    return redirect("/login")
-            except:
-                messages.error(request, "Usuario no registrado.")
-                return redirect("/login")                
-        else:
-            messages.error(request, "Intentelo nuevamente en unos minutos.")
-            return redirect("/login")
-    else:
-        form = forms.LoginForm()
-    return render(request, "registration/login.html", {"form": form})
-
-"""def view_login(request):
     if request.method == "POST":
         form = forms.LoginForm(request.POST)
         if form.is_valid():
@@ -80,5 +59,4 @@ def view_login(request):
             return redirect("/login")
     else:
         form = forms.LoginForm()
-    return render(request, "registration/login.html", {"form": form})"""
-    
+    return render(request, "registration/login.html", {"form": form})

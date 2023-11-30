@@ -1,4 +1,7 @@
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
+from django.utils.translation import gettext_lazy as _
+from .managers import CustomUserManager
 
 category=(
     (1, 'Línea Blanca'),
@@ -34,17 +37,23 @@ prov=(
     (25, 'Islas Malvinas'),
 )
 
-# Create your models here.
-class Usuario(models.Model):
+
+class Usuario(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(_("email address"), unique=True)
     nombre = models.CharField(max_length=100, blank=False, null=False)
-    email = models.EmailField(max_length=254, unique=True, blank=False, null=False)
     password = models.CharField(max_length=100, blank=False, null=False)
     nacimiento = models.DateField(blank=False, null=False)
     telefono = models.CharField(max_length=100, blank=False, null=False)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
+
     USERNAME_FIELD = "email"
 
+    objects = CustomUserManager()
+
     def __str__(self):
-        return self.nombre
+        return self.email
+
 
 class Producto(models.Model):
     producto = models.CharField(max_length=100)
@@ -62,12 +71,3 @@ class Compras(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.PROTECT)
     dir_envio = models.CharField(max_length=1000)
     provincia_envio = models.IntegerField(choices=prov)
-
-
-
-
-
-
-
-
-
