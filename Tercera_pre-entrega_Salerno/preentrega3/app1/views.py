@@ -1,7 +1,6 @@
-from time import sleep
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+#from django.contrib.auth import authenticate, login
 from datetime import date
 from . import forms, models
 
@@ -41,13 +40,15 @@ def view_login(request):
     if request.method == "POST":
         form = forms.LoginForm(request.POST)
         if form.is_valid():
-            email = request.POST['email']
-            password = request.POST['password']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
             try:
                 user = models.Usuario.objects.get(email__exact=email)
                 if ((user is not None) and (user.password==password)):
-                    messages.success(request, "Login exitoso.")
-                    return redirect("/login")
+                    if (user.email=="manager@electrolaucha.com"):
+                        return render(request, "users/managermenu.html")
+                    else:
+                        return render(request, "users/usermenu.html", {"user": user.nombre})
                 else:
                     messages.error(request, "Contraseña errónea.")
                     return redirect("/login")
