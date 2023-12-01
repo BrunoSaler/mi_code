@@ -1,7 +1,6 @@
 from django import forms
 from . import models
 
-
 class UsuarioForm(forms.ModelForm):
     class Meta:
         model = models.Usuario
@@ -15,3 +14,9 @@ class UsuarioForm(forms.ModelForm):
 class LoginForm(forms.Form):
     email = forms.EmailField(max_length=254)
     password = forms.CharField(max_length=100,widget=forms.PasswordInput())
+
+class ProductoForm(forms.ModelForm):
+    class Meta:
+        model = models.Producto
+        fields = "__all__"
+        labels = {'categoria': ('Categoría'), "precio": ("Precio ($)"),}

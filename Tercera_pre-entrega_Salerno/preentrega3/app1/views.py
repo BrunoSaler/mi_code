@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-#from django.contrib.auth import authenticate, login
+from django.contrib.messages import get_messages
 from datetime import date
 from . import forms, models
+
+name = None
 
 def date_format(date):
     months = ("Enero", "Febrero", "Marzo", "Abri", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre")
@@ -46,9 +48,10 @@ def view_login(request):
                 user = models.Usuario.objects.get(email__exact=email)
                 if ((user is not None) and (user.password==password)):
                     if (user.email=="manager@electrolaucha.com"):
-                        return render(request, "users/managermenu.html")
+                        return redirect("/managermenu")
                     else:
-                        return render(request, "users/usermenu.html", {"user": user.nombre})
+                        messages.success(request, f"{user.nombre}")
+                        return redirect("/usermenu")
                 else:
                     messages.error(request, "Contraseña errónea.")
                     return redirect("/login")
@@ -61,6 +64,70 @@ def view_login(request):
     else:
         form = forms.LoginForm()
     return render(request, "registration/login.html", {"form": form})
+
+def view_managermenu(request):
+    return render(request, "users/managermenu.html")
+
+def view_usermenu(request):
+    global name
+    storage = get_messages(request)
+    for message in storage:
+        if message != None:
+            name = message
+        break
+    return render(request, "users/usermenu.html", {"user":name})
+
+def view_ingresar_producto(request):
+    if request.method == "POST":
+        form = forms.ProductoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Producto ingresado.")
+            return redirect("/managermenu")
+        else:
+            messages.error(request, "Intentelo nuevamente en unos minutos.")
+            return redirect("/ingresoproducto")
+    else:
+        form = forms.ProductoForm()
+    return render(request, "users/ingresoproducto.html", {"form": form})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 """def view_login(request):
     if request.method == "POST":

@@ -1,20 +1,13 @@
 {% extends "app1/index.html" %}
 
 {% block content %}
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <div class="alert alert-success" role="alert">
-            {{ message }}
-        </div>
-        {% endfor %}
-    </ul>
-    {% endif %}
     <h1>Menu de usuario de Manager</h1>
     <br><br>
     <div class="d-grid gap-2 col-6 mx-auto">
-        <button class="btn btn-secondary" type="button">Ver todas las compras</button>
-        <button class="btn btn-success" type="button">Ver Usuarios</button>
-        <button class="btn btn-warning" type="button">Ver compras de un usuario</button>
+        <button class="btn btn-secondary" type="button" onclick="location.href='/'">Ver todas las compras</button>
+        <button class="btn btn-success" type="button" onclick="location.href='/'">Ver Usuarios</button>
+        <button class="btn btn-warning" type="button" onclick="location.href='/'">Ver compras de un usuario</button>
+        <button class="btn btn-danger" type="button" onclick="location.href='/ingresoproducto'">Ingresar productos a la venta</button>
+        <button class="btn btn-light" type="button" onclick="location.href='/'">Ver productos a la venta</button>
     </div>
 {% endblock content %}
