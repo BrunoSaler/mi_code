@@ -20,3 +20,9 @@ class ProductoForm(forms.ModelForm):
         model = models.Producto
         fields = "__all__"
         labels = {'categoria': ('Categoría'), "precio": ("Precio ($)"),}
+
+class ComprasForm(forms.ModelForm):
+    class Meta:
+        model = models.Compras
+        fields = "__all__"
+        labels = {'fecha_compra': ('Fecha de compra'), "producto": ("Producto (modelo)"), "dir_envio": ("Dirección de envío"), "provincia_envio": ("Provincia de envío"),}

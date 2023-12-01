@@ -8,4 +8,7 @@ urlpatterns = [
     path("managermenu/", view_managermenu),
     path("usermenu/", view_usermenu),
     path("ingresoproducto/", view_ingresar_producto),
+    path("verproductos/", view_ver_productos),
+    path("verusuarios/", view_ver_usuarios),
+    path("ingresocompras/", view_ingresar_compra),
 ]

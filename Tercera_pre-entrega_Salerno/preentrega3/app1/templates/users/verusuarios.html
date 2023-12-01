@@ -1,0 +1,27 @@
+{% extends "app1/index.html" %}
+{% block content %}
+    <h1>Usuarios</h1>
+    <br><br>
+    <table class="table table-success table-striped">
+        <thead>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Nacimiento</th>
+            <th>Telefono</th>        
+        </thead>
+        <tbody>
+            {% if usuarios %}
+                {% for usuario in usuarios %}
+                    <tr>
+                        <td>{{usuario.nombre}}</td>
+                        <td>{{usuario.email}}</td>
+                        <td>{{usuario.nacimiento}}</td>
+                        <td>{{usuario.telefono}}</td>
+                        </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+    <br><br>
+    <h3 style="color: red">No tiene permiso para ver las contraseñas.</h3>
+{% endblock content %}

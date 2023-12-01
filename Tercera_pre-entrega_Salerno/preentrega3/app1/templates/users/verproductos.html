@@ -1,0 +1,27 @@
+{% extends "app1/index.html" %}
+{% block content %}
+    <h1>Productos</h1>
+    <br><br>
+    <table class="table table-success table-striped">
+        <thead>
+            <th>Producto</th>
+            <th>Modelo</th>
+            <th>Marca</th>
+            <th>Precio</th>
+            <th>Categoría</th>            
+        </thead>
+        <tbody>
+            {% if productos %}
+                {% for producto in productos %}
+                    <tr>
+                        <td>{{producto.producto}}</td>
+                        <td>{{producto.marca}}</td>
+                        <td>{{producto.modelo}}</td>
+                        <td>{{producto.precio}}</td>
+                        <td>{{producto.get_categoria_display}}</td>
+                        </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+{% endblock content %}

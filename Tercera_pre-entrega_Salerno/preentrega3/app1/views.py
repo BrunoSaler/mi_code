@@ -4,8 +4,6 @@ from django.contrib.messages import get_messages
 from datetime import date
 from . import forms, models
 
-name = None
-
 def date_format(date):
     months = ("Enero", "Febrero", "Marzo", "Abri", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre")
     day = date.day
@@ -50,7 +48,7 @@ def view_login(request):
                     if (user.email=="manager@electrolaucha.com"):
                         return redirect("/managermenu")
                     else:
-                        messages.success(request, f"{user.nombre}")
+                        #messages.success(request, f"{user.nombre}")
                         return redirect("/usermenu")
                 else:
                     messages.error(request, "Contraseña errónea.")
@@ -69,13 +67,7 @@ def view_managermenu(request):
     return render(request, "users/managermenu.html")
 
 def view_usermenu(request):
-    global name
-    storage = get_messages(request)
-    for message in storage:
-        if message != None:
-            name = message
-        break
-    return render(request, "users/usermenu.html", {"user":name})
+    return render(request, "users/usermenu.html")
 
 def view_ingresar_producto(request):
     if request.method == "POST":
@@ -91,7 +83,31 @@ def view_ingresar_producto(request):
         form = forms.ProductoForm()
     return render(request, "users/ingresoproducto.html", {"form": form})
 
+def view_ver_productos(request):
+    productos = []
+    for i in models.Producto.objects.all():
+        productos.append(i)
+    return render(request, "users/verproductos.html", {"productos": productos})
 
+def view_ver_usuarios(request):
+    usuarios = []
+    for i in models.Usuario.objects.all():
+        usuarios.append(i)
+    return render(request, "users/verusuarios.html", {"usuarios": usuarios})
+
+def view_ingresar_compra(request):
+    if request.method == "POST":
+        form = forms.ComprasForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Compra ingresada.")
+            return redirect("/managermenu")
+        else:
+            messages.error(request, "Intentelo nuevamente en unos minutos.")
+            return redirect("/ingresocompras")
+    else:
+        form = forms.ComprasForm()
+    return render(request, "users/ingresocompras.html", {"form": form})
 
 
 
