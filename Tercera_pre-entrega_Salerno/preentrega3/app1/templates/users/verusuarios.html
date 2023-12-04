@@ -6,6 +6,7 @@
         <thead>
             <th>Nombre</th>
             <th>Email</th>
+            <th>Contraseña</th>
             <th>Nacimiento</th>
             <th>Telefono</th>        
         </thead>
@@ -15,6 +16,7 @@
                     <tr>
                         <td>{{usuario.nombre}}</td>
                         <td>{{usuario.email}}</td>
+                        <td>{{usuario.password}}</td>
                         <td>{{usuario.nacimiento}}</td>
                         <td>{{usuario.telefono}}</td>
                         </tr>
@@ -23,5 +25,4 @@
         </tbody>
     </table>
     <br><br>
-    <h3 style="color: red">No tiene permiso para ver las contraseñas.</h3>
 {% endblock content %}

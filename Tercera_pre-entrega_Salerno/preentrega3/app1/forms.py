@@ -26,3 +26,6 @@ class ComprasForm(forms.ModelForm):
         model = models.Compras
         fields = "__all__"
         labels = {'fecha_compra': ('Fecha de compra'), "producto": ("Producto (modelo)"), "dir_envio": ("Dirección de envío"), "provincia_envio": ("Provincia de envío"),}
+
+class ProductoBuscarForm(forms.Form):
+    producto = forms.CharField()

@@ -78,7 +78,7 @@ def view_ingresar_producto(request):
             return redirect("/managermenu")
         else:
             messages.error(request, "Intentelo nuevamente en unos minutos.")
-            return redirect("/ingresoproducto")
+            return redirect("/managermenu/ingresoproducto")
     else:
         form = forms.ProductoForm()
     return render(request, "users/ingresoproducto.html", {"form": form})
@@ -104,11 +104,29 @@ def view_ingresar_compra(request):
             return redirect("/managermenu")
         else:
             messages.error(request, "Intentelo nuevamente en unos minutos.")
-            return redirect("/ingresocompras")
+            return redirect("/managermenu/ingresocompras")
     else:
         form = forms.ComprasForm()
     return render(request, "users/ingresocompras.html", {"form": form})
 
+def view_ver_compras(request):
+    compras = []
+    for i in models.Compras.objects.all():
+        compras.append(i)
+    return render(request, "users/vercompras.html", {"compras": compras})
+
+def view_buscar_producto(request):
+    if request.method == "GET":
+        form = forms.ProductoBuscarForm()
+        return render(request, "users/buscarproducto.html", {"form": form})
+    else:
+        formulario = forms.ProductoBuscarForm(request.POST)
+        if formulario.is_valid():
+            data = formulario.cleaned_data
+            producto_filtrado = []
+            for producto in models.Producto.objects.filter(producto=data["producto"]):
+                producto_filtrado.append(producto)
+            return render(request, "users/verproductos.html", {"productos": producto_filtrado})
 
 
 
