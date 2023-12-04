@@ -3,6 +3,7 @@ Consideraciones previas:
 La base de datos ya tiene algunos datos cargados en sus tablas para comprobar las funciones.
 
 Hay un usuario de los ya creados que es el Manager, este tiene privilegios especiales y no debe borrarse.
+
 admin: admin@electrolaucha.com
 Password: alfabeta5
 
@@ -18,7 +19,7 @@ Puede navegar por la misma para ver su estética, y hacer click en alguna de las 
 Los link a las funciones principales están en la solapa superior.
 
 Registro: Al hacer click en regístrese en la página anterior, nos llevará al formulario de registro.
-Puede ingresar un usuario desde aquí, con la condición de que el email no sea el de otro usuario, en ese caso arrojará el error “inténtelo nuevamente en unos minutos”.  Todos los campos son requeridos. Para el caso que nos compete, sírvase verificar los mails de los usuarios en la base de datos.
+Puede ingresar un usuario desde aquí, con la condición de que el email no sea el de otro usuario, en ese caso arrojará el error “inténtelo nuevamente en unos minutos”. Todos los campos son requeridos. Para el caso que nos compete, sírvase verificar los mails de los usuarios en la base de datos.
 
 Login: Se implementa un login muy rudimentario, accediendo desde la página principal.
 Si me logueo con un usuario cualquiera: se muestra página EN CONSTRUCCIÓN.
@@ -37,8 +38,10 @@ Ver modelos de un producto disponibles: Me permite ver todos los modelos disponi
 Con esto cumplo con la búsqueda en la BD.
 
 Ingreso de compras: puedo ingresar compras a un usuario en particular, inclusive el manager.
-Si repito ver todas las compras luego de ingresar una nueva:
-Vemos que esta la nueva compra ingresada.
+Si repito ver todas las compras luego de ingresar una nueva, vemos que esta la nueva compra ingresada.
+
+Buscar productos por categoría: Me da un listado de los productos de la categoría seleccionada. Lo interesante acá es que el campo en models es un IntegerField con choices y en forms debe ser ChoiceField. Para saber, el dato en la base se guarda como el entero.
+
 Para finalizar, ingresaremos al panel de administrador. Aquí podemos ver y crear registros en la BD, entre otras cosas.
 
 

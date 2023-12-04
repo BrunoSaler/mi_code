@@ -127,6 +127,19 @@ def view_buscar_producto(request):
             for producto in models.Producto.objects.filter(producto=data["producto"]):
                 producto_filtrado.append(producto)
             return render(request, "users/verproductos.html", {"productos": producto_filtrado})
+        
+def view_buscar_test1(request): #busqueda de IntegerField con choices en models, es ChoiceField en forms
+    if request.method == "GET":
+        form = forms.Test1Form()
+        return render(request, "users/producto_x_categoria.html", {"form": form})
+    else:
+        formulario = forms.Test1Form(request.POST)
+        if formulario.is_valid():
+            data = formulario.cleaned_data
+            producto_filtrado = []
+            for producto in models.Producto.objects.filter(categoria=data["producto"]):
+                producto_filtrado.append(producto)
+            return render(request, "users/verproductos.html", {"productos": producto_filtrado})
 
 
 

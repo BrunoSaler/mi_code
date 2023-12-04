@@ -13,4 +13,5 @@ urlpatterns = [
     path("managermenu/ingresocompras/", view_ingresar_compra),
     path("managermenu/vercompras/", view_ver_compras),
     path("managermenu/buscarproducto/", view_buscar_producto),
+    path("managermenu/producto_x_categoria/", view_buscar_test1),
 ]

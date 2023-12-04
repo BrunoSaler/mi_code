@@ -1,6 +1,12 @@
 from django import forms
 from . import models
 
+category=(
+    (1, 'Línea Blanca'),
+    (2, 'Electrodoméstico'),
+    (3, 'Informática'),
+)
+
 class UsuarioForm(forms.ModelForm):
     class Meta:
         model = models.Usuario
@@ -29,3 +35,6 @@ class ComprasForm(forms.ModelForm):
 
 class ProductoBuscarForm(forms.Form):
     producto = forms.CharField()
+
+class Test1Form(forms.Form):
+    producto = forms.ChoiceField(choices=category)
