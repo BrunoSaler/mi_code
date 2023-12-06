@@ -37,4 +37,8 @@ class ProductoBuscarForm(forms.Form):
     producto = forms.CharField()
 
 class Test1Form(forms.Form):
-    producto = forms.ChoiceField(choices=category)
+    categoria = forms.ChoiceField(choices=category)
+    labels = {'categoria': ('Categoría')}
+
+class Test2Form(forms.Form):
+    usuario = forms.CharField()

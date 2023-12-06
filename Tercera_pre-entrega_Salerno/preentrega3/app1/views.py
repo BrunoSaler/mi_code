@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.contrib.messages import get_messages
 from datetime import date
@@ -137,10 +137,24 @@ def view_buscar_test1(request): #busqueda de IntegerField con choices en models,
         if formulario.is_valid():
             data = formulario.cleaned_data
             producto_filtrado = []
-            for producto in models.Producto.objects.filter(categoria=data["producto"]):
+            for producto in models.Producto.objects.filter(categoria=data["categoria"]): #el primer argumento del paréntesis es el campo a comparar en models y el segundo es el del forms
                 producto_filtrado.append(producto)
             return render(request, "users/verproductos.html", {"productos": producto_filtrado})
 
+def view_buscar_test2(request): #busqueda de un campo que es foráneo de otra clase
+    if request.method == "GET":
+        form = forms.Test2Form()
+        return render(request, "users/compras_x_usuario.html", {"form": form})
+    else:
+        formulario = forms.Test2Form(request.POST)
+        if formulario.is_valid():
+            data = formulario.cleaned_data
+            compras_filtrado = []
+            aux = get_object_or_404(models.Usuario,nombre=data["usuario"])
+            id = aux.pk
+            for compra in models.Compras.objects.filter(usuario=id):
+                compras_filtrado.append(compra)
+            return render(request, "users/vercompras.html", {"compras": compras_filtrado})
 
 
 
