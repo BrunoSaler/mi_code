@@ -1,0 +1,27 @@
+{% extends "base/navbar.html" %}
+
+{% block content %}
+{% load static %}
+<!-- Page content-->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8">
+                <article>
+                    <header class="mb-4">
+                        <h1 class="fw-bolder mb-1">Acerca de mí</h1>
+                    </header>
+                    <!-- Preview image figure-->
+                    <figure class="mb-4"><img class="img-fluid rounded" src="{% static 'base/assets/img/about.png' %}" alt="..." /></figure>
+                    <!-- Post content-->
+                    <section class="mb-5">
+                        <p class="fs-5 mb-4">Mi nombre es Bruno Salerno. Soy argentino, de Boca, fanático de Chevrolet y profundamente rosista. Nací en Marzo de 1989, en plena hiperinflación en Argentina.</p>
+                        <p class="fs-5 mb-4">Soy Ingeniero Electrónico recibido en 2015, en la gloriosa Universidad Tecnológica nacional (UTN), previamente Universidad Obrera Nacional (fundada en 1948 por el Teniente General Juan Domingo Perón).</p>
+                        <p class="fs-5 mb-4"><i>"No queremos universidades para formar charlatanes y generalizadores. No queremos escuelas para formar hombres que les digan a los demás cómo hay que hacer las cosas sino hombres que sepan hacer por sí las cosas (...) y para esto hay que tener manos de trabajador y vivir con olor a aceite de las máquinas".</i></p>
+                        <p class="fs-5 mb-4">Hablo y escribo en idioma inglés, obteniendo la certificación First Certificate en 2006. En 2022 finalicé con éxito un curso de Posgrado en Dirección de Recursos Humanos en UADE, y en 2023 realicé un curso de PowerBI en CoderHouse, también satisfactoriamente. Tengo conocimientos en reparación de PC, adquiridos de forma autodidacta.</p>
+                        <p class="fs-5 mb-4">Mis expectativa con Python es conocer las bases del lenguaje, para en un futuro posiblemente poder adentrarme en el mundo de la Inteligencia Artificial, la cuál claramente es el futuro y reemplazará a muchos de los trabajos actuales.</p>
+                    </section>
+                </article>
+        </div>
+    </div>
+</div>
+{% endblock content %}
