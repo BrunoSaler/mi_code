@@ -1,0 +1,30 @@
+{% extends "base/navbar.html" %}
+{% block content %}
+    <br><br>
+    <h1>Productos</h1>
+    <br><br>
+    <table class="table table-success table-striped">
+        <thead>
+            <th>Modelo</th>
+            <th>Producto</th>
+            <th>Marca</th>
+            <th>Precio</th>   
+            <th>Stock</th>  
+            <th>Acción</th>       
+        </thead>
+        <tbody>
+            {% if productos %}
+                {% for producto in productos %}
+                    <tr>
+                        <td>{{producto.modelo}}</td>
+                        <td>{{producto.producto}}</td>
+                        <td>{{producto.marca}}</td>
+                        <td>{{producto.precio}}</td>
+                        <td>{{producto.get_stock_display}}</td>
+                        <td><button class="btn btn-info" onclick="location.href='/'">INFO</button></td>
+                        </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+{% endblock content %}
