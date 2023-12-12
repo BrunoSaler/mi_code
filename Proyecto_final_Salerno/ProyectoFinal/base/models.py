@@ -6,10 +6,6 @@ category=(
     (3, 'Informática'),
 )
 
-sino=(
-    (1, 'SI'),
-    (2, 'NO'),
-)
 
 class UpperField(models.CharField):
 
@@ -22,7 +18,6 @@ class Producto(models.Model):
     categoria = models.IntegerField(choices=category)
     marca = UpperField(max_length=100)
     precio = models.DecimalField(decimal_places=2, max_digits=9)
-    stock = models.IntegerField(choices=sino)
 
     def __str__(self):
         return self.modelo

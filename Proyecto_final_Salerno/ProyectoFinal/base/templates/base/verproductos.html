@@ -9,7 +9,6 @@
             <th>Producto</th>
             <th>Marca</th>
             <th>Precio</th>   
-            <th>Stock</th>  
             <th>Acción</th>       
         </thead>
         <tbody>
@@ -20,8 +19,7 @@
                         <td>{{producto.producto}}</td>
                         <td>{{producto.marca}}</td>
                         <td>{{producto.precio}}</td>
-                        <td>{{producto.get_stock_display}}</td>
-                        <td><button class="btn btn-info" onclick="location.href='/'">INFO</button></td>
+                        <td><button class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='/'">VER INFO</button></td>
                         </tr>
                 {% endfor %}
             {% endif %}
