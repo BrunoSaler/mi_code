@@ -3,6 +3,7 @@
     <br><br>
     <h1>Productos</h1>
     <br><br>
+    {% if productos %}
     <table class="table table-success table-striped">
         <thead>
             <th>Modelo</th>
@@ -12,7 +13,6 @@
             <th>Acción</th>       
         </thead>
         <tbody>
-            {% if productos %}
                 {% for producto in productos %}
                     <tr>
                         <td>{{producto.modelo}}</td>
@@ -22,7 +22,12 @@
                         <td><button class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='/'">VER INFO</button></td>
                         </tr>
                 {% endfor %}
-            {% endif %}
         </tbody>
     </table>
+    {% else %}
+    {% load static %}
+    <figure class="mb-4"><div style="text-align: center;"><img class="img-fluid rounded" src="{% static 'base/assets/img/notfound.png' %}" alt="..." /></figure></div>
+    <br><br>
+    <div style="text-align: center;"><h1>UPS! No hay nada que mostrar aún</h1></div>
+    {% endif %}
 {% endblock content %}
