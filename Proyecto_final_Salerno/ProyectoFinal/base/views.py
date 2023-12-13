@@ -42,3 +42,12 @@ def view_list_info(request):
     for producto in models.Producto.objects.filter(categoria="3"):
         producto_filtrado.append(producto)
     return render(request, "base/verproductos.html", {"productos": producto_filtrado})
+
+def view_infoprod(request, modelo):
+    modelo=modelo[1:-1]
+    aux = get_object_or_404(models.Producto,modelo=modelo)
+    id = aux.pk
+    info = []
+    for x in models.InfoProd.objects.filter(modelo=id):
+        info.append(x)
+    return render(request, "base/infoprod.html", {"descripcion": info})

@@ -1,0 +1,30 @@
+{% extends "base/navbar.html" %}
+{% block content %}
+    <br><br>
+    {% if descripcion %}
+        {% for x in descripcion %}
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-lg-8">
+                            <article>
+                                <header class="mb-4">
+                                    <div style="text-align: center;"><h1 class="fw-bolder mb-1">{{x.titulo}}</h1></div>
+                                </header>
+                                <!-- Preview image figure-->
+                                <figure class="mb-4"><div style="text-align: center;"><img class="img-fluid rounded" src="/media/{{x.imagen}}" alt="..." /></div></figure>
+                                <!-- Post content-->
+                                <section class="mb-5">
+                                    <div style="text-align: center;"><p class="fs-5 mb-4">{{x.cuerpo|linebreaksbr}}</p></div>
+                                </section>
+                            </article>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+    {% load static %}
+    <figure class="mb-4"><div style="text-align: center;"><img class="img-fluid rounded" src="{% static 'base/assets/img/notfound.png' %}" alt="..." /></div></figure>
+    <br><br>
+    <div style="text-align: center;"><h1>UPS! No hay nada que mostrar aún</h1></div>
+    {% endif %}
+{% endblock content %}

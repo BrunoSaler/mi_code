@@ -19,7 +19,7 @@
                         <td>{{producto.producto}}</td>
                         <td>{{producto.marca}}</td>
                         <td>{{producto.precio}}</td>
-                        <td><button class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='/'">VER INFO</button></td>
+                        <td><button class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='/infoprod/<{{producto.modelo}}>'">VER INFO</button></td>
                         </tr>
                 {% endfor %}
         </tbody>
