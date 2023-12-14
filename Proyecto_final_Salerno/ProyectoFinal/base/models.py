@@ -28,4 +28,4 @@ class InfoProd(models.Model):
     imagen = models.FileField(upload_to="productos")
 
     def __str__(self):
-        return f"{self.modelo} {self.imagen}"
+        return f"Info {self.modelo}"

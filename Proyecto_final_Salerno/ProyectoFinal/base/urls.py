@@ -8,4 +8,5 @@ urlpatterns = [
     path("list_electro/", view_list_electro),
     path("list_info/", view_list_info),
     path("infoprod/<path:modelo>/", view_infoprod), #el path: es para que me acepte los modelos que tengan /
+    path("menu/", view_menu),
 ]

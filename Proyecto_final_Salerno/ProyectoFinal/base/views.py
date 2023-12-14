@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, render, redirect
+from django.contrib.auth.decorators import login_required
 #from django.contrib import messages
 #from django.contrib.messages import get_messages
 from datetime import date
@@ -51,3 +52,10 @@ def view_infoprod(request, modelo):
     for x in models.InfoProd.objects.filter(modelo=id):
         info.append(x)
     return render(request, "base/infoprod.html", {"descripcion": info})
+
+@login_required
+def view_menu(request):
+    if (request.user.is_superuser):
+        return render(request, "base/adminmenu.html")
+    else:
+        return render(request, "base/usermenu.html")
