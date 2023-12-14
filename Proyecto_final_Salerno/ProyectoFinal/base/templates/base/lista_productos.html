@@ -1,0 +1,37 @@
+{% extends "base/navbar.html" %}
+{% block content %}
+    <br><br>
+    <h1>Productos</h1>
+    <br><br>
+    {% if productos %}
+    <table class="table table-success table-striped">
+        <thead>
+            <th>Modelo</th>
+            <th>Producto</th>
+            <th>Categoría</th>
+            <th>Marca</th>
+            <th>Precio</th>   
+            <th>Acción</th>       
+            <th></th> 
+            <th></th> 
+        </thead>
+        <tbody>
+                {% for producto in productos %}
+                    <tr>
+                        <td>{{producto.modelo}}</td>
+                        <td>{{producto.producto}}</td>
+                        <td>{{producto.get_categoria_display}}</td>
+                        <td>{{producto.marca}}</td>
+                        <td>{{producto.precio}}</td>
+                        <td><button class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='/infoprod/<{{producto.modelo}}>'">VER INFO</button></td><td><button class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='{% url 'edit-product' producto.pk %}'">EDITAR</button></td><td><button class="btn btn-danger btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='{% url 'delete-product' producto.pk %}'">ELIMINAR</button></td>
+                        </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    {% load static %}
+    <figure class="mb-4"><div style="text-align: center;"><img class="img-fluid rounded" src="{% static 'base/assets/img/notfound.png' %}" alt="..." /></figure></div>
+    <br><br>
+    <div style="text-align: center;"><h1>UPS! No hay nada que mostrar aún</h1></div>
+    {% endif %}
+{% endblock content %}

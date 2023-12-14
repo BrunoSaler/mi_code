@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
-#from django.contrib import messages
-#from django.contrib.messages import get_messages
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 from datetime import date
 from . import models
 
@@ -59,3 +60,25 @@ def view_menu(request):
         return render(request, "base/adminmenu.html")
     else:
         return render(request, "base/usermenu.html")
+    
+class CrearProductoView(LoginRequiredMixin, CreateView):
+    model = models.Producto
+    template_name = "base/crear_producto.html"
+    success_url = reverse_lazy("menu")
+    fields = "__all__"
+
+class ProductoView(LoginRequiredMixin, ListView):
+    model = models.Producto
+    context_object_name = "productos"
+    template_name = "base/lista_productos.html"
+
+class ModificarProductoView(LoginRequiredMixin, UpdateView):
+    model = models.Producto
+    template_name = "base/update_producto.html"
+    success_url = reverse_lazy("menu")
+    fields = ["producto", "categoria", "marca", "precio"]
+
+class BorrarProductoView(LoginRequiredMixin, DeleteView):
+    model = models.Producto
+    template_name = "base/borrar_producto.html"
+    success_url = reverse_lazy("menu")
