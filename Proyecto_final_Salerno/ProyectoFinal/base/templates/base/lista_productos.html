@@ -3,6 +3,8 @@
     <br><br>
     <h1>Productos</h1>
     <br><br>
+    <p><button class="btn btn-success" type="button" onclick="location.href='/menu/newproduct'">Crear producto</button>&emsp;<button class="btn btn-success" type="button" onclick="location.href='/menu/newinfo'">Crear reseña</button></p>
+    <br><br>
     {% if productos %}
     <table class="table table-success table-striped">
         <thead>
@@ -11,8 +13,8 @@
             <th>Categoría</th>
             <th>Marca</th>
             <th>Precio</th>   
-            <th>Acción</th>       
-            <th></th> 
+            <th></th>       
+            <th>Acciónes</th> 
             <th></th> 
         </thead>
         <tbody>
@@ -23,7 +25,7 @@
                         <td>{{producto.get_categoria_display}}</td>
                         <td>{{producto.marca}}</td>
                         <td>{{producto.precio}}</td>
-                        <td><button class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='/infoprod/<{{producto.modelo}}>'">VER INFO</button></td><td><button class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='{% url 'edit-product' producto.pk %}'">EDITAR</button></td><td><button class="btn btn-danger btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='{% url 'delete-product' producto.pk %}'">ELIMINAR</button></td>
+                        <td><button class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='{% url 'edit-product' producto.pk %}'">EDITAR PRODUCTO</button></td><td><button class="btn btn-danger btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='{% url 'delete-product' producto.pk %}'">ELIMINAR PORDUCTO</button></td><td><button class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='/menu/infoprod/<{{producto.modelo}}>'">VER RESEÑA</button></td>
                         </tr>
                 {% endfor %}
         </tbody>

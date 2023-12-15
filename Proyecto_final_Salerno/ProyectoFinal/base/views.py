@@ -2,9 +2,10 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from django.urls import reverse_lazy
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.mixins import LoginRequiredMixin
 from datetime import date
-from . import models
+from . import models, forms
 
 def date_format(date):
     months = ("Enero", "Febrero", "Marzo", "Abri", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre")
@@ -64,7 +65,7 @@ def view_menu(request):
 class CrearProductoView(LoginRequiredMixin, CreateView):
     model = models.Producto
     template_name = "base/crear_producto.html"
-    success_url = reverse_lazy("menu")
+    success_url = reverse_lazy("productlist")
     fields = "__all__"
 
 class ProductoView(LoginRequiredMixin, ListView):
@@ -75,10 +76,60 @@ class ProductoView(LoginRequiredMixin, ListView):
 class ModificarProductoView(LoginRequiredMixin, UpdateView):
     model = models.Producto
     template_name = "base/update_producto.html"
-    success_url = reverse_lazy("menu")
+    success_url = reverse_lazy("productlist")
     fields = ["producto", "categoria", "marca", "precio"]
 
 class BorrarProductoView(LoginRequiredMixin, DeleteView):
     model = models.Producto
     template_name = "base/borrar_producto.html"
-    success_url = reverse_lazy("menu")
+    success_url = reverse_lazy("productlist")
+
+class CrearInfoView(LoginRequiredMixin, CreateView):
+    model = models.InfoProd
+    template_name = "base/crear_info.html"
+    success_url = reverse_lazy("productlist")
+    fields = "__all__"
+
+@login_required
+def view_infoprod_admin(request, modelo):
+    modelo=modelo[1:-1]
+    aux = get_object_or_404(models.Producto,modelo=modelo)
+    id = aux.pk
+    info = []
+    for x in models.InfoProd.objects.filter(modelo=id):
+        info.append(x)
+    return render(request, "base/infoprod_admin.html", {"descripcion": info})
+
+@login_required
+def view_infoprod_edit(request,modelo):
+    modelo=modelo[1:-1]
+    aux = get_object_or_404(models.Producto,modelo=modelo)
+    id = aux.pk
+    info = get_object_or_404(models.InfoProd,modelo=id)
+    if request.method == 'POST':
+        form = forms.EditInfoForm(request.POST, request.FILES)
+        if form.is_valid():
+            data = form.cleaned_data
+            info.titulo = data["titulo"]
+            info.cuerpo = data["cuerpo"]
+            info.imagen = data["imagen"]
+            info.save()
+            return redirect("productlist")        
+        return render(request, "base/update_info.html", {"form":form})  
+    else:
+        form = forms.EditInfoForm()
+        return render(request, "base/update_info.html", {"form":form})
+
+
+@login_required
+def view_infodelete(request, modelo):
+    modelo=modelo[1:-1]
+    aux = get_object_or_404(models.Producto,modelo=modelo)
+    id = aux.pk
+    
+    if request.method == 'POST':
+        info = get_object_or_404(models.InfoProd,modelo=id)
+        info.delete()
+        #profesores = Profesor.objects.all()
+        return redirect("productlist")  
+    return render(request, "base/borrar_info.html")
