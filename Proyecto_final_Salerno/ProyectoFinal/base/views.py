@@ -2,10 +2,11 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from django.urls import reverse_lazy
-from django.core.exceptions import ObjectDoesNotExist
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from datetime import date
 from . import models, forms
+from django.contrib.auth.models import User
 
 def date_format(date):
     months = ("Enero", "Febrero", "Marzo", "Abri", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre")
@@ -120,7 +121,6 @@ def view_infoprod_edit(request,modelo):
         form = forms.EditInfoForm()
         return render(request, "base/update_info.html", {"form":form})
 
-
 @login_required
 def view_infodelete(request, modelo):
     modelo=modelo[1:-1]
@@ -133,3 +133,39 @@ def view_infodelete(request, modelo):
         #profesores = Profesor.objects.all()
         return redirect("productlist")  
     return render(request, "base/borrar_info.html")
+
+@login_required
+def view_ingresar_compra(request):
+    if request.method == "POST":
+        form = forms.ComprasForm(request.POST)
+        if form.is_valid():
+            fecha_compra = form.cleaned_data['fecha_compra']
+            producto = form.cleaned_data['producto']
+            dir_envio = form.cleaned_data['dir_envio']
+            provincia_envio = form.cleaned_data['provincia_envio']
+            user = User.objects.get(id=request.user.id)
+            modelo = models.Compras(fecha_compra = fecha_compra, producto= producto, dir_envio=dir_envio, provincia_envio=provincia_envio, usuario=user )
+            modelo.save()
+            messages.success(request, "Compra ingresada.")
+            return redirect("/menu")
+        else:
+            messages.error(request, "Intentelo nuevamente en unos minutos.")
+            return redirect("/menu")
+    else:
+        form = forms.ComprasForm()
+    return render(request, "base/ingresocompras.html", {"form": form})
+
+@login_required
+def view_ver_compras(request):
+    compras = []
+    user = User.objects.get(id=request.user.id)
+    for i in models.Compras.objects.filter(usuario=user):
+        compras.append(i)
+    return render(request, "base/vercompras.html", {"compras": compras})
+
+@login_required
+def view_ver_compras_admin(request):
+    compras = []
+    for i in models.Compras.objects.all():
+        compras.append(i)
+    return render(request, "base/vercomprasadmin.html", {"compras": compras})

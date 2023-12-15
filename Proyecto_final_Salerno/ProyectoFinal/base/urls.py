@@ -17,6 +17,9 @@ urlpatterns = [
     path("menu/<pk>/deleteproduct/", BorrarProductoView.as_view(),name="delete-product"),
     path("menu/newinfo/", CrearInfoView.as_view(),name="new-info"),
     path("menu/infoprod/<path:modelo>/", view_infoprod_admin),
+    path("menu/ingresocompras/", view_ingresar_compra),
+    path("menu/vercompras/", view_ver_compras),
+    path("menu/vercomprasadmin/", view_ver_compras_admin),
     
 
 ]

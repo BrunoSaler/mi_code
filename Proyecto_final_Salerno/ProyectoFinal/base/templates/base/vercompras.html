@@ -1,0 +1,31 @@
+{% extends "base/navbar.html" %}
+{% block content %}
+    <br><br>
+    <h1>Compras</h1>
+    <br><br>
+    {% if compras %}
+        <table class="table table-success table-striped">
+            <thead>
+                <th>Fecha de compra</th>
+                <th>Producto</th>
+                <th>Dirección de envío</th>
+                <th>Provincia de envío</th>            
+            </thead>
+            <tbody>
+                {% for compra in compras %}
+                    <tr>
+                        <td>{{compra.fecha_compra}}</td>
+                        <td>{{compra.producto}}</td>
+                        <td>{{compra.dir_envio}}</td>
+                        <td>{{compra.get_provincia_envio_display}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {% load static %}
+        <figure class="mb-4"><div style="text-align: center;"><img class="img-fluid rounded" src="{% static 'base/assets/img/notfound.png' %}" alt="..." /></figure></div>
+        <br><br>
+        <div style="text-align: center;"><h1>UPS! No hay nada que mostrar aún</h1></div>
+    {% endif %}   
+{% endblock content %}
