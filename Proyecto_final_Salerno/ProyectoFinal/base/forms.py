@@ -1,6 +1,6 @@
 from django import forms
 from . import models
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, UserModel
+from django.contrib.auth.forms import UserCreationForm, UserModel
 from .models import Avatar
 
 class EditInfoForm(forms.ModelForm):
@@ -48,3 +48,15 @@ class InfoForm(forms.ModelForm):
         model = models.InfoProd
         fields = "__all__"
         labels = {'titulo': ('Título'), "imagen": ("Imágen"),}
+
+class BlogForm(forms.ModelForm):
+    class Meta:
+        model = models.Blog
+        fields = ["titulo", "subtitulo", "descripcion"]
+        labels = {'titulo': ('Título'), 'subtitulo': ('Subtítulo'), 'descripcion': ('Descripción')}
+
+class BlogEditForm(forms.ModelForm):
+    class Meta:
+        model = models.Blog
+        fields = ["titulo", "subtitulo", "descripcion"]
+        labels = {'titulo': ('Título'), 'subtitulo': ('Subtítulo'), 'descripcion': ('Descripción')}

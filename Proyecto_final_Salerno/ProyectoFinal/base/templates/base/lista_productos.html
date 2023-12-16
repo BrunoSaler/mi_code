@@ -34,7 +34,9 @@
                         <td>{{producto.get_categoria_display}}</td>
                         <td>{{producto.marca}}</td>
                         <td>{{producto.precio}}</td>
-                        <td><button class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='{% url 'edit-product' producto.id %}'">EDITAR PRODUCTO</button></td><td><button class="btn btn-danger btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='{% url 'delete-product' producto.id %}'">ELIMINAR PORDUCTO</button></td><td><button class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='/menu/infoprod/<{{producto.modelo}}>'">VER RESEÑA</button></td>
+                        <td><button class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='{% url 'edit-product' producto.id %}'">EDITAR PRODUCTO</button></td>
+                        <td><button class="btn btn-danger btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='{% url 'delete-product' producto.id %}'">ELIMINAR PRODUCTO</button></td>
+                        <td><button class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='/menu/infoprod/<{{producto.modelo}}>'">VER RESEÑA</button></td>
                         </tr>
                 {% endfor %}
         </tbody>

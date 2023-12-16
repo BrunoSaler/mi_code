@@ -1,9 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
-from django.urls import reverse_lazy
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils import timezone
 from datetime import date
 from . import models, forms
 from django.contrib.auth.models import User
@@ -456,3 +454,99 @@ def view_avatar(request):
             modelo = models.Avatar(user=usuario, imagen=data["imagen"])
             modelo.save()
             return redirect("/menu/view_profile")
+        
+@login_required
+def view_crear_blog(request):
+    if request.method == "POST":
+        form = forms.BlogForm(request.POST)
+        if form.is_valid():
+            titulo = form.cleaned_data['titulo']
+            subtitulo = form.cleaned_data['subtitulo']
+            descripcion = form.cleaned_data['descripcion']
+            autor = User.objects.get(id=request.user.id)
+            fecha = timezone.now()
+            blog = models.Blog(titulo=titulo, subtitulo=subtitulo, descripcion=descripcion, autor=autor, fecha=fecha)
+            blog.save()
+            return redirect("/menu/all_blogs_admin")
+        else:
+            messages.error(request, "Intentelo nuevamente en unos minutos.")
+            return redirect("/menu/all_blogs_admin")
+    else:
+        form = forms.BlogForm()
+        if request.user.is_authenticated:
+            usuario = request.user
+            avatar = models.Avatar.objects.filter(user=usuario).last()
+            avatar_url = avatar.imagen.url if avatar is not None else ""
+        else:
+            avatar_url = ""
+        diccionario = {
+            'avatar_url': avatar_url,
+            "form": form,
+        }
+    return render(request, "base/newblog.html", diccionario)
+
+@login_required
+def view_ver_blogs_admin(request):
+    blogs = []
+    for i in models.Blog.objects.all():
+        blogs.append(i)
+    if request.user.is_authenticated:
+        usuario = request.user
+        avatar = models.Avatar.objects.filter(user=usuario).last()
+        avatar_url = avatar.imagen.url if avatar is not None else ""
+    else:
+        avatar_url = ""
+    diccionario = {
+        'avatar_url': avatar_url,
+        "blogs": blogs,
+    }
+    return render(request, "base/ver_blogs_admin.html", diccionario)
+
+@login_required
+def view_ver_blogs(request):
+    blogs = []
+    for i in models.Blog.objects.all():
+        blogs.append(i)
+    if request.user.is_authenticated:
+        usuario = request.user
+        avatar = models.Avatar.objects.filter(user=usuario).last()
+        avatar_url = avatar.imagen.url if avatar is not None else ""
+    else:
+        avatar_url = ""
+    diccionario = {
+        'avatar_url': avatar_url,
+        "blogs": blogs,
+    }
+    return render(request, "base/ver_blogs.html", diccionario)
+
+@login_required
+def view_edit_blog(request, id):
+    blog = models.Blog.objects.get(id=id)
+    if request.method == "GET":
+        form = forms.BlogEditForm()
+        if request.user.is_authenticated:
+            usuario = request.user
+            avatar = models.Avatar.objects.filter(user=usuario).last()
+            avatar_url = avatar.imagen.url if avatar is not None else ""
+        else:
+            avatar_url = ""
+        diccionario = {
+            'avatar_url': avatar_url,
+            "form": form,
+        }
+        return render(request,"base/editar_blog.html", diccionario)
+    else:
+        form = forms.BlogEditForm(request.POST)
+        if form.is_valid():
+            informacion = form.cleaned_data
+            blog.titulo = informacion["titulo"]
+            blog.subtitulo = informacion["subtitulo"]
+            blog.descripcion = informacion["descripcion"]
+            autor = User.objects.get(id=request.user.id)
+            fecha = timezone.now()
+            blog.save()
+            messages.success(request, "Blog editado.")
+            return redirect("/menu")
+        else:
+            messages.error(request, "Intentelo nuevamente en unos minutos.")
+            return redirect("/menu/all_blogs_admin")

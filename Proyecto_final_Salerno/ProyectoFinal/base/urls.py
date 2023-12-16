@@ -23,5 +23,11 @@ urlpatterns = [
     path("menu/edit_profile/", view_editar_perfil),
     path("menu/view_profile/", view_perfil),
     path("menu/edit_avatar/", view_avatar),
+    path("menu/new_blog/", view_crear_blog),
+    path("menu/all_blogs_admin/", view_ver_blogs_admin),
+    path("menu/all_blogs/", view_ver_blogs),
+    
+    path("menu/editblog/<int:id>/", view_edit_blog, name="edit-blog"),
+    
 
 ]

@@ -1,9 +1,8 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from . import forms
-from base.models import models
 
 def view_register(request):
 

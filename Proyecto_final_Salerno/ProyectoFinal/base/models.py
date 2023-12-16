@@ -76,3 +76,33 @@ class Avatar(models.Model):
 
     def __str__(self):
         return f"Avatar {self.user}"
+    
+class Blog(models.Model):
+    autor = models.ForeignKey(User, on_delete=models.CASCADE)                   #CUANDO BORRO EL ADMIN, QUE NO VA A PASAR, QUE BORRE EL BLOG
+    titulo = UpperField(max_length=100, unique=True)
+    subtitulo = models.CharField(max_length=200)
+    fecha = models.DateField()
+    descripcion = models.CharField(max_length=2000)
+
+    def __str__(self):
+        return f"Blog {self.titulo}"
+    
+class Post(models.Model):                                                       #el autor siempre es admin
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)                    #CUANDO BORRO EL ADMIN, QUE NO VA A PASAR, QUE BORRE EL POST
+    titulo = UpperField(max_length=100, unique=True)
+    subtitulo = models.CharField(max_length=200)
+    fecha = models.DateField()    
+    cuerpo = models.TextField()
+    imagen = models.FileField(upload_to="posts")
+
+    def __str__(self):
+        return f"Blog {self.blog}: Post {self.titulo}"
+
+class Comentario(models.Model):
+    autor = models.ForeignKey(User, on_delete=models.CASCADE)                   #CUANDO BORRO EL USER, QUE BORRE EL COMMENT
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)                    #CUANDO BORRO EL POST, QUE BORRE EL COMMENT
+    fecha = models.DateField()    
+    comentario = models.TextField()
+
+    def __str__(self):
+        return f"@{self.autor}: '{self.post}'"
