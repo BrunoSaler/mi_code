@@ -14,6 +14,8 @@
     <br><br>
     <h1>Crear Reseña</h1>
     <br><br>
+    <h3>Recuerde que no puede crear una reseña de un modelo que ya la tiene.</h3>
+    <br><br>
     <form enctype="multipart/form-data" method="post">
         {% csrf_token %}
         {{form|crispy}}

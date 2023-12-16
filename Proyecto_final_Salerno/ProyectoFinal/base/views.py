@@ -247,13 +247,6 @@ def CrearInfoView(request):
         }
     return render(request, "base/crear_info.html", diccionario)
 
-
-"""class CrearInfoView(LoginRequiredMixin, CreateView):
-    model = models.InfoProd
-    template_name = "base/crear_info.html"
-    success_url = reverse_lazy("productlist")
-    fields = "__all__" """
-
 @login_required
 def view_infoprod_admin(request, modelo):
     modelo=modelo[1:-1]
@@ -386,7 +379,17 @@ def view_ver_compras_admin(request):
     compras = []
     for i in models.Compras.objects.all():
         compras.append(i)
-    return render(request, "base/vercomprasadmin.html", {"compras": compras})
+    if request.user.is_authenticated:
+        usuario = request.user
+        avatar = models.Avatar.objects.filter(user=usuario).last()
+        avatar_url = avatar.imagen.url if avatar is not None else ""
+    else:
+        avatar_url = ""
+    diccionario = {
+        'avatar_url': avatar_url,
+        "compras": compras,
+    }
+    return render(request, "base/vercomprasadmin.html", diccionario)
 
 @login_required
 def view_perfil(request):
@@ -395,7 +398,7 @@ def view_perfil(request):
     avatar_url = avatar.imagen.url if avatar is not None else ""
     diccionario = {
         'avatar_url': avatar_url,
-        "user": usuario,
+        "usuario": usuario,
     }
     return render(request, "base/veruser.html", diccionario)
 

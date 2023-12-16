@@ -14,6 +14,8 @@
     <br><br>
     <h1>Crear Producto</h1>
     <br><br>
+    <h3>Recuerde que no puede crear un producto con un modelo ya existente.</h3>
+    <br><br>
     <form method="post">
         {% csrf_token %}
         {{form|crispy}}

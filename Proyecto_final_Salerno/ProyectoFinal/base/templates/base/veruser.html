@@ -3,7 +3,7 @@
     <br><br>
     <h1>Usuario</h1>
     <br><br>
-    {% if user %}
+    {% if usuario %}
     <table class="table table-success table-striped">
         <thead>
             <th>Nombre</th>
@@ -14,9 +14,9 @@
         </thead>
         <tbody>
                 <tr>
-                    <td>{{user.first_name}}</td>
-                    <td>{{user.last_name}}</td>
-                    <td>{{user.email}}</td>
+                    <td>{{usuario.first_name}}</td>
+                    <td>{{usuario.last_name}}</td>
+                    <td>{{usuario.email}}</td>
                     <td><button class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='/menu/edit_profile'">Editar Perfil</button></td><td><button class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='/menu/edit_avatar'">Crear o editar Avatar</button></td>
                 </tr>
         </tbody>
