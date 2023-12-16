@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from . import forms
+from base.models import models
 
 def view_register(request):
 
@@ -15,14 +16,12 @@ def view_register(request):
             data = form.cleaned_data
             usuario = data["username"]
             form.save()
-            messages.error(request, f"{usuario} fue registrado correctamente.")
-            return render(request,"base/home.html")
+            return render(request,"autentifications/registrok.html")
         else:
             messages.error(request, "Intentelo nuevamente en unos minutos.")
             return render(request,"autentifications/registro.html",{"form": form})
 
 def view_login(request):
-
     if request.user.is_authenticated:
         messages.error(request, f"{usuario} ya esta logueado.")
         return render(request,"base/home.html")
@@ -35,9 +34,9 @@ def view_login(request):
             data = formulario.cleaned_data
             usuario = data["username"]
             password = data["password"]
-            modelo = authenticate(username=usuario, password=password)
-            login(request, modelo)
-            return render(request,"base/home.html")
+            persona= authenticate(username=usuario, password=password)
+            login(request, persona)
+            return render(request,"autentifications/loginexitoso.html")
         else:
             messages.error(request, "Intentelo nuevamente en unos minutos.")
             return render(request,"autentifications/login.html",{"form": formulario})

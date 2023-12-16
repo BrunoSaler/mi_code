@@ -11,15 +11,17 @@ urlpatterns = [
     path("infoprod/<path:modelo>/", view_infoprod), #el path: es para que me acepte los modelos que tengan /
     path("menu/", view_menu, name="menu"),
     path("menu/infoprod/edit/<path:modelo>/", view_infoprod_edit),
-    path("menu/newproduct/", CrearProductoView.as_view()),
-    path("menu/productlist/", ProductoView.as_view(), name="productlist"),
-    path("menu/<pk>/editproduct/", ModificarProductoView.as_view(),name="edit-product"),
-    path("menu/<pk>/deleteproduct/", BorrarProductoView.as_view(),name="delete-product"),
-    path("menu/newinfo/", CrearInfoView.as_view(),name="new-info"),
+    path("menu/newproduct/", CrearProductoView),
+    path("menu/productlist/", ProductoView, name="productlist"),
+    path("menu/editproduct/<int:id>/", ModificarProductoView, name="edit-product"),
+    path("menu/deleteproduct/<int:id>/", BorrarProductoView, name="delete-product"),    
+    path("menu/newinfo/", CrearInfoView,name="new-info"),
     path("menu/infoprod/<path:modelo>/", view_infoprod_admin),
     path("menu/ingresocompras/", view_ingresar_compra),
     path("menu/vercompras/", view_ver_compras),
     path("menu/vercomprasadmin/", view_ver_compras_admin),
-    
+    path("menu/edit_profile/", view_editar_perfil),
+    path("menu/view_profile/", view_perfil),
+    path("menu/edit_avatar/", view_avatar),
 
 ]

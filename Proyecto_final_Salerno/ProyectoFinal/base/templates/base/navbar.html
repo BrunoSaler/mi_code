@@ -22,6 +22,7 @@
                     <li class="nav-item"><a class="nav-link active text-uppercase" aria-current="page" href="http://127.0.0.1:8000/">Blog</a></li>
                     {% if user.is_authenticated %}
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link active text-uppercase" href="/menu">{{ user.username }}</a></li>
+                        <img src="{{ avatar_url }}" style="height: 40px; width: auto; border-radius: 50%; vertical-align: middle;"/>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link active text-uppercase" href="/logout">Logout</a></li>
                     {% else %}
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link active text-uppercase" href="/signup">Regístrese</a></li>
