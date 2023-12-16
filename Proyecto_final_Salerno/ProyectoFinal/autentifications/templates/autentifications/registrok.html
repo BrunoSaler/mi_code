@@ -2,8 +2,10 @@
 
 {% block content%}
 {% load static %}
-    <br><br>
-    <figure class="mb-4"><div style="text-align: center;"><img class="img-fluid rounded" src="{% static 'base/assets/img/registrok.png' %}" alt="..." /></figure></div>
-    <br><br>
-    <div style="text-align: center;"><h1>Te has registrado correctamente.</h1></div>
+    {% if usuario %}
+        <br><br>
+        <figure class="mb-4"><div style="text-align: center;"><img class="img-fluid rounded" src="{% static 'base/assets/img/registrok.png' %}" width="500" height="600" alt="..." /></figure></div>
+        <br><br>
+        <div style="text-align: center;"><h1>Te has registrado correctamente {{usuario}}.</h1></div>
+    {% endif %}
 {% endblock%}

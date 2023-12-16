@@ -16,7 +16,7 @@ def view_register(request):
             data = form.cleaned_data
             usuario = data["username"]
             form.save()
-            return render(request,"autentifications/registrok.html")
+            return render(request,"autentifications/registrok.html", {"usuario": usuario})
         else:
             messages.error(request, "Intentelo nuevamente en unos minutos.")
             return render(request,"autentifications/registro.html",{"form": form})
