@@ -17,9 +17,7 @@
                 <th>Título</th>
                 <th>Autor</th>
                 <th>Fecha de creación</th>
-                <th></th> 
-                <th>Acciones</th>
-                <th></th>            
+                <th>Acciones</th>          
             </thead>
             <tbody>
                 {% for blog in blogs %}
@@ -27,9 +25,7 @@
                         <td>{{blog.titulo}}</td>
                         <td>{{blog.autor}}</td>
                         <td>{{blog.fecha}}</td>
-                        <td><button class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='/'">VER DETALLE</button></td>
-                        <td><button class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='{% url 'edit-blog' blog.id %}'">EDITAR BLOG</button></td>
-                        <td><button class="btn btn-danger btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='/'">ELIMINAR BLOG</button></td>
+                        <td><button class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='{% url 'detailblog_admin' blog.id %}'">Ver detalle</button></td>
                     </tr>
                 {% endfor %}
             </tbody>

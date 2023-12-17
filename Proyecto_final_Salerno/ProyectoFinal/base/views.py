@@ -520,10 +520,41 @@ def view_ver_blogs(request):
     return render(request, "base/ver_blogs.html", diccionario)
 
 @login_required
+def view_detailblog_admin(request,id):
+    blog = models.Blog.objects.get(id=id)
+    if request.user.is_authenticated:
+        usuario = request.user
+        avatar = models.Avatar.objects.filter(user=usuario).last()
+        avatar_url = avatar.imagen.url if avatar is not None else ""
+    else:
+        avatar_url = ""
+    diccionario = {
+        'avatar_url': avatar_url,
+        "blog": blog,
+    }
+    return render(request, "base/ver_detailblog_admin.html", diccionario)
+
+@login_required
+def view_detailblog(request,id):
+    blog = models.Blog.objects.get(id=id)
+    if request.user.is_authenticated:
+        usuario = request.user
+        avatar = models.Avatar.objects.filter(user=usuario).last()
+        avatar_url = avatar.imagen.url if avatar is not None else ""
+    else:
+        avatar_url = ""
+    diccionario = {
+        'avatar_url': avatar_url,
+        "blog": blog,
+    }
+    return render(request, "base/ver_detailblog.html", diccionario)
+
+@login_required
 def view_edit_blog(request, id):
     blog = models.Blog.objects.get(id=id)
+    valores_iniciales = {"titulo": blog.titulo, "subtitulo": blog.subtitulo, "descripcion": blog.descripcion}
     if request.method == "GET":
-        form = forms.BlogEditForm()
+        form = forms.BlogEditForm(initial=valores_iniciales)
         if request.user.is_authenticated:
             usuario = request.user
             avatar = models.Avatar.objects.filter(user=usuario).last()
@@ -546,7 +577,29 @@ def view_edit_blog(request, id):
             fecha = timezone.now()
             blog.save()
             messages.success(request, "Blog editado.")
-            return redirect("/menu")
+            return redirect("/menu/all_blogs_admin")
         else:
             messages.error(request, "Intentelo nuevamente en unos minutos.")
             return redirect("/menu/all_blogs_admin")
+        
+@login_required
+def view_deleteblog(request, id):
+    blog = models.Blog.objects.get(id=id)
+    if request.user.is_authenticated:
+        usuario = request.user
+        avatar = models.Avatar.objects.filter(user=usuario).last()
+        avatar_url = avatar.imagen.url if avatar is not None else ""
+    else:
+        avatar_url = ""
+    diccionario = {
+        'avatar_url': avatar_url,
+    }
+    if request.method == 'POST':
+        try:
+            blog.delete()
+            messages.success(request, "Blog eliminado.")
+            return redirect("/menu/all_blogs_admin")
+        except:   
+            messages.error(request, "Intentelo nuevamente en unos minutos.")
+            return redirect("/menu/all_blogs_admin")
+    return render(request, "base/borrar_blog.html", diccionario)

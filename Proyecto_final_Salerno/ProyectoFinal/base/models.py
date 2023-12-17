@@ -79,7 +79,7 @@ class Avatar(models.Model):
     
 class Blog(models.Model):
     autor = models.ForeignKey(User, on_delete=models.CASCADE)                   #CUANDO BORRO EL ADMIN, QUE NO VA A PASAR, QUE BORRE EL BLOG
-    titulo = UpperField(max_length=100, unique=True)
+    titulo = UpperField(max_length=100)
     subtitulo = models.CharField(max_length=200)
     fecha = models.DateField()
     descripcion = models.CharField(max_length=2000)
@@ -89,7 +89,7 @@ class Blog(models.Model):
     
 class Post(models.Model):                                                       #el autor siempre es admin
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)                    #CUANDO BORRO EL ADMIN, QUE NO VA A PASAR, QUE BORRE EL POST
-    titulo = UpperField(max_length=100, unique=True)
+    titulo = UpperField(max_length=100)
     subtitulo = models.CharField(max_length=200)
     fecha = models.DateField()    
     cuerpo = models.TextField()
