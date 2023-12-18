@@ -87,3 +87,8 @@ class PostEditForm(forms.ModelForm):
         self.fields['titulo'].required = False
         self.fields['subtitulo'].required = False
         self.fields['cuerpo'].required = False
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = models.Comentario
+        fields = ["comentario"]

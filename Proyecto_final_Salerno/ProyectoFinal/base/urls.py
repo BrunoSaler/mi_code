@@ -35,6 +35,8 @@ urlpatterns = [
     path("pages/<int:id>/view_posts", view_verposts, name="viewposts"),
     path("menu/detailblog_admin/editpost/<int:id>", view_editar_post, name="editpost"),
     path("menu/detailblog_admin/deletepost/<int:id>", view_deletepost, name="deletepost"),
+    path("pages/<int:id>/comments", view_ver_comentarios, name="comments"),
+    #path("newcomment/<string>", view_crear_comentario, name="newcomment"),
     
     
 

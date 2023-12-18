@@ -19,22 +19,22 @@
                                 <header class="mb-4">
                                     <div style="text-align: center;"><h1 class="fw-bolder mb-1">{{post.titulo}}</h1></div>
                                     <div style="text-align: center;"><h3 class="fw-bolder mb-1">{{post.subtitulo}}</h3></div>
-                                    <div ><class="fw-bolder mb-1">Autor: admin</div>
-                                    <div ><class="fw-bolder mb-1">Fecha de última modificación: {{post.fecha}}</div>
+                                    <div><p class="mb-1">Autor: admin</p></div>
+                                    <div><p class="mb-1">Fecha de última modificación: {{post.fecha}}</p></div>
                                 </header>
                                 <!-- Preview image figure-->
                                 <figure class="mb-4"><div style="text-align: center;"><img class="img-fluid rounded" src="/media/{{post.imagen}}" alt="..." /></div></figure>
                                 <!-- Post content-->
                                 <section class="mb-5">
-                                    <div ><p class="fs-5 mb-4">{{post.cuerpo|linebreaksbr}}</p></div>
-                                    <br><br>
-                                    <br><br>
+                                    <div><p class="fs-5 mb-4">{{post.cuerpo|linebreaksbr}}</p></div>
+                                    <br>
                                 </section>
                             </article>
                     </div>
                 </div>
             </div>
-            <button class="btn btn-success" type="button" onclick="location.href='/'">Ver comentarios</button>
+            <button class="btn btn-success" type="button" onclick="location.href='{% url 'comments' post.id %}'">Ver comentarios</button>
+            <br><br>
         {% endfor %}
     {% else %}
     {% load static %}

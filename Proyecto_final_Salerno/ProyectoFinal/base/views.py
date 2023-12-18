@@ -644,9 +644,10 @@ def view_crear_post(request,id):
 @login_required
 def view_verposts_admin(request,id):
     blog = models.Blog.objects.get(id=id)
-    posts = []   
+    posts = []
+    comentarios = []  
     for i in models.Post.objects.filter(blog=blog):
-        posts.append(i)
+        posts.append(i)    
     if request.user.is_authenticated:
         usuario = request.user
         avatar = models.Avatar.objects.filter(user=usuario).last()
@@ -656,6 +657,7 @@ def view_verposts_admin(request,id):
     diccionario = {
         'avatar_url': avatar_url,
         "posts": posts,
+        "comentarios": comentarios,
     }
     return render(request, "base/ver_posts_admin.html", diccionario)
 
@@ -737,3 +739,55 @@ def view_deletepost(request, id):
             messages.error(request, "Intentelo nuevamente en unos minutos.")
             return redirect("/menu/all_blogs_admin")
     return render(request, "base/deletepost.html", diccionario)
+
+@login_required
+def view_ver_comentarios(request,id):
+    post = models.Post.objects.get(id=id)
+    comentarios = []   
+    for i in models.Comentario.objects.filter(post=post):
+        comentarios.append(i)
+    if request.user.is_authenticated:
+        usuario = request.user
+        avatar = models.Avatar.objects.filter(user=usuario).last()
+        avatar_url = avatar.imagen.url if avatar is not None else ""
+    else:
+        avatar_url = ""
+    diccionario = {
+        'avatar_url': avatar_url,
+        "comentarios": comentarios,
+    }
+    return render(request, "base/ver_comentarios.html", diccionario)
+
+"""def view_crear_comentario(request,string):
+    stringlimpio=string[1:-1]
+    breakpoint()
+    aux = get_object_or_404(models.Post,titulo=stringlimpio)
+    post = aux.pk
+    usuario = request.user
+    if request.method == "POST":
+        form = forms.CommentForm(request.POST)
+        if form.is_valid():
+            autor = usuario
+            post = post
+            fecha = timezone.now()
+            comment = form.cleaned_data['comentario']
+            comentario = models.Comentario(autor=autor, post=post, fecha=fecha, comentario=comment)
+            comentario.save()
+            messages.success(request, "Comentario agregado.")
+            return redirect("/menu/all_blogs_admin")
+        else:
+            messages.error(request, "Intentelo nuevamente en unos minutos.")
+            return redirect("/menu/all_blogs_admin")
+    else:
+        form = forms.CommentForm()
+        if request.user.is_authenticated:
+            usuario = request.user
+            avatar = models.Avatar.objects.filter(user=usuario).last()
+            avatar_url = avatar.imagen.url if avatar is not None else ""
+        else:
+            avatar_url = ""
+        diccionario = {
+            'avatar_url': avatar_url,
+            "form": form,
+        }
+    return render(request, "base/newcomment.html", diccionario)"""

@@ -96,7 +96,7 @@ class Post(models.Model):                                                       
     imagen = models.FileField(upload_to="posts")
 
     def __str__(self):
-        return f"{self.blog}: Post {self.titulo}"
+        return f"{self.titulo}"
 
 class Comentario(models.Model):
     autor = models.ForeignKey(User, on_delete=models.CASCADE)                   #CUANDO BORRO EL USER, QUE BORRE EL COMMENT
