@@ -85,9 +85,9 @@ class Blog(models.Model):
     descripcion = models.CharField(max_length=2000)
 
     def __str__(self):
-        return f"Blog {self.titulo}"
+        return f"{self.titulo}"
     
-class Post(models.Model):                                                       #el autor siempre es admin
+class Post(models.Model):                                                                   #el autor siempre es admin
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)                    #CUANDO BORRO EL ADMIN, QUE NO VA A PASAR, QUE BORRE EL POST
     titulo = UpperField(max_length=100)
     subtitulo = models.CharField(max_length=200)
@@ -96,7 +96,7 @@ class Post(models.Model):                                                       
     imagen = models.FileField(upload_to="posts")
 
     def __str__(self):
-        return f"Blog {self.blog}: Post {self.titulo}"
+        return f"{self.blog}: Post {self.titulo}"
 
 class Comentario(models.Model):
     autor = models.ForeignKey(User, on_delete=models.CASCADE)                   #CUANDO BORRO EL USER, QUE BORRE EL COMMENT

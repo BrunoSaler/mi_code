@@ -271,13 +271,18 @@ def view_infoprod_edit(request,modelo):
     aux = get_object_or_404(models.Producto,modelo=modelo)
     id = aux.pk
     info = get_object_or_404(models.InfoProd,modelo=id)
+    imagen = info.imagen
+    valores_iniciales = {"titulo": info.titulo, "cuerpo": info.cuerpo, "imagen": info.imagen}
     if request.method == 'POST':
         form = forms.EditInfoForm(request.POST, request.FILES)
         if form.is_valid():
             data = form.cleaned_data
             info.titulo = data["titulo"]
             info.cuerpo = data["cuerpo"]
-            info.imagen = data["imagen"]
+            if (data["imagen"]==None):
+                info.imagen = imagen
+            else:
+                info.imagen = data["imagen"]
             info.save()
             messages.success(request, "Reseña modificada.")
             return redirect("productlist")
@@ -285,7 +290,7 @@ def view_infoprod_edit(request,modelo):
             messages.error(request, "Intentelo nuevamente en unos minutos.")
             return redirect("productlist")
     else:
-        form = forms.EditInfoForm()
+        form = forms.EditInfoForm(initial=valores_iniciales)
         if request.user.is_authenticated:
             usuario = request.user
             avatar = models.Avatar.objects.filter(user=usuario).last()
@@ -573,7 +578,6 @@ def view_edit_blog(request, id):
             blog.titulo = informacion["titulo"]
             blog.subtitulo = informacion["subtitulo"]
             blog.descripcion = informacion["descripcion"]
-            autor = User.objects.get(id=request.user.id)
             fecha = timezone.now()
             blog.save()
             messages.success(request, "Blog editado.")
@@ -603,3 +607,133 @@ def view_deleteblog(request, id):
             messages.error(request, "Intentelo nuevamente en unos minutos.")
             return redirect("/menu/all_blogs_admin")
     return render(request, "base/borrar_blog.html", diccionario)
+
+@login_required
+def view_crear_post(request,id):
+    blog = models.Blog.objects.get(id=id)
+    if request.method == "POST":
+        form = forms.PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            blog = blog
+            titulo = form.cleaned_data['titulo']
+            subtitulo = form.cleaned_data['subtitulo']
+            fecha = timezone.now()
+            cuerpo = form.cleaned_data['cuerpo']
+            imagen = form.cleaned_data['imagen']
+            post = models.Post(blog=blog, titulo=titulo, subtitulo=subtitulo, fecha=fecha, cuerpo=cuerpo, imagen=imagen)
+            post.save()
+            messages.success(request, "Post creado correctamente.")
+            return redirect("/menu/all_blogs_admin")
+        else:
+            messages.error(request, "Intentelo nuevamente en unos minutos.")
+            return redirect("/menu/all_blogs_admin")
+    else:
+        form = forms.PostForm()
+        if request.user.is_authenticated:
+            usuario = request.user
+            avatar = models.Avatar.objects.filter(user=usuario).last()
+            avatar_url = avatar.imagen.url if avatar is not None else ""
+        else:
+            avatar_url = ""
+        diccionario = {
+            'avatar_url': avatar_url,
+            "form": form,
+        }
+    return render(request, "base/newpost.html", diccionario)
+
+@login_required
+def view_verposts_admin(request,id):
+    blog = models.Blog.objects.get(id=id)
+    posts = []   
+    for i in models.Post.objects.filter(blog=blog):
+        posts.append(i)
+    if request.user.is_authenticated:
+        usuario = request.user
+        avatar = models.Avatar.objects.filter(user=usuario).last()
+        avatar_url = avatar.imagen.url if avatar is not None else ""
+    else:
+        avatar_url = ""
+    diccionario = {
+        'avatar_url': avatar_url,
+        "posts": posts,
+    }
+    return render(request, "base/ver_posts_admin.html", diccionario)
+
+@login_required
+def view_verposts(request,id):
+    blog = models.Blog.objects.get(id=id)
+    posts = []   
+    for i in models.Post.objects.filter(blog=blog):
+        posts.append(i)
+    if request.user.is_authenticated:
+        usuario = request.user
+        avatar = models.Avatar.objects.filter(user=usuario).last()
+        avatar_url = avatar.imagen.url if avatar is not None else ""
+    else:
+        avatar_url = ""
+    diccionario = {
+        'avatar_url': avatar_url,
+        "posts": posts,
+    }
+    return render(request, "base/ver_posts.html", diccionario)
+
+@login_required
+def view_editar_post(request, id):
+    post = models.Post.objects.get(id=id)
+    imagen = post.imagen
+    valores_iniciales = {"titulo": post.titulo, "subtitulo": post.subtitulo, "cuerpo": post.cuerpo, "imagen": imagen}
+    if request.method == "POST":
+        form = forms.PostEditForm(request.POST, request.FILES)
+        if form.is_valid():
+            data = form.cleaned_data
+            post.titulo = data['titulo']
+            post.titulo = data['titulo']
+            post.subtitulo = data['subtitulo']
+            post.fecha = timezone.now()
+            post.cuerpo = data['cuerpo']
+            post.imagen = data['imagen']
+            if (data['imagen']==None):
+                post.imagen = imagen
+            else:
+                post.imagen = data['imagen']
+            post.save()
+            messages.success(request, "Post editado correctamente.")
+            return redirect("/menu/all_blogs_admin")
+        else:
+            messages.error(request, "Intentelo nuevamente en unos minutos.")
+            return redirect("/menu/all_blogs_admin")
+    else:
+        form = forms.PostEditForm(initial=valores_iniciales)
+        if request.user.is_authenticated:
+            usuario = request.user
+            avatar = models.Avatar.objects.filter(user=usuario).last()
+            avatar_url = avatar.imagen.url if avatar is not None else ""
+        else:
+            avatar_url = ""
+        diccionario = {
+            'avatar_url': avatar_url,
+            "form": form,
+        }
+    return render(request, "base/editpost.html", diccionario)
+
+@login_required
+def view_deletepost(request, id):
+    post = models.Post.objects.get(id=id)
+    if request.user.is_authenticated:
+        usuario = request.user
+        avatar = models.Avatar.objects.filter(user=usuario).last()
+        avatar_url = avatar.imagen.url if avatar is not None else ""
+    else:
+        avatar_url = ""
+    diccionario = {
+        'avatar_url': avatar_url,
+    }
+    if request.method == 'POST':
+        try:
+            post.delete()
+            messages.success(request, "Post eliminado.")
+            return redirect("/menu/all_blogs_admin")
+        except:   
+            messages.error(request, "Intentelo nuevamente en unos minutos.")
+            return redirect("/menu/all_blogs_admin")
+    return render(request, "base/deletepost.html", diccionario)

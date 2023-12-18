@@ -3,7 +3,7 @@
     <br><br>
     {% if descripcion %}
             {% for x in descripcion %}  
-            <button class="btn btn-success" type="button" onclick="location.href='/menu/infoprod/edit/<{{x.modelo}}>'">Editar reseña</button>&emsp;<button class="btn btn-success" type="button" onclick="location.href='/menu/infoprod/delete/<{{x.modelo}}>'">Eliminar reseña</button>  
+            <button class="btn btn-success" type="button" onclick="location.href='/menu/infoprod/edit/<{{x.modelo}}>'">Editar reseña</button>&emsp;<button class="btn btn-danger" type="button" onclick="location.href='/menu/infoprod/delete/<{{x.modelo}}>'">Eliminar reseña</button>  
             <div class="container mt-5">
                 <div class="row">
                     <div class="col-lg-8">

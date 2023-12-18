@@ -1,0 +1,45 @@
+{% extends "base/navbar.html" %}
+{% block content %}
+    <br><br>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if posts %}
+            {% for post in posts %}  
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-lg-8">
+                            <article>
+                                <header class="mb-4">
+                                    <div style="text-align: center;"><h1 class="fw-bolder mb-1">{{post.titulo}}</h1></div>
+                                    <div style="text-align: center;"><h3 class="fw-bolder mb-1">{{post.subtitulo}}</h3></div>
+                                    <div ><class="fw-bolder mb-1">Autor: admin</div>
+                                    <div ><class="fw-bolder mb-1">Fecha de última modificación: {{post.fecha}}</div>
+                                </header>
+                                <!-- Preview image figure-->
+                                <figure class="mb-4"><div style="text-align: center;"><img class="img-fluid rounded" src="/media/{{post.imagen}}" alt="..." /></div></figure>
+                                <!-- Post content-->
+                                <section class="mb-5">
+                                    <div ><p class="fs-5 mb-4">{{post.cuerpo|linebreaksbr}}</p></div>
+                                    <br><br>
+                                    <br><br>
+                                </section>
+                            </article>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-success" type="button" onclick="location.href='/'">Ver comentarios</button>
+        {% endfor %}
+    {% else %}
+    {% load static %}
+    <figure class="mb-4"><div style="text-align: center;"><img class="img-fluid rounded" src="{% static 'base/assets/img/notfound.png' %}" alt="..." /></div></figure>
+    <br><br>
+    <div style="text-align: center;"><h1>UPS! No hay nada que mostrar aún</h1></div>
+    {% endif %}
+{% endblock content %}

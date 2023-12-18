@@ -2,7 +2,6 @@
 
 {% block content %}
     <br><br>
-    {% if blog %}
     {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -12,6 +11,7 @@
         {% endfor %}
     </ul>
   {% endif %}
+  {% if blog %}
     <body>
         <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
           <symbol id="check2" viewBox="0 0 16 16">
@@ -62,11 +62,18 @@
       <div class="bg-body-tertiary p-5 rounded mt-3">
         <h1>{{blog.titulo}}</h1>
         <p class="lead"><h2>{{blog.subtitulo}}</h2></p>
+        <p class="lead">Autor: {{blog.autor}}</p>
+        <p class="lead">Fecha de última edición: {{blog.fecha}}</p>
         <p class="lead">{{blog.descripcion}}</p>
-        <a class="btn btn-lg btn-primary" onclick="location.href='{% url 'edit-blog' blog.id %}'" role="button">Editar Blog</a>&emsp;<a class="btn btn-lg btn-danger" onclick="location.href='{% url 'borrar-blog' blog.id %}'" role="button">Eliminar Blog</a>&emsp;<a class="btn btn-lg btn-primary" onclick="location.href='/'" role="button">Ver posts</a>
+        <a class="btn btn-lg btn-primary" onclick="location.href='{% url 'edit-blog' blog.id %}'" role="button">Editar Blog</a>&emsp;<a class="btn btn-lg btn-danger" onclick="location.href='{% url 'borrar-blog' blog.id %}'" role="button">Eliminar Blog</a>&emsp;<a class="btn btn-lg btn-primary" onclick="location.href='{% url 'newpost' blog.id %}'" role="button">Crear post</a>&emsp;<a class="btn btn-lg btn-primary" onclick="location.href='{% url 'viewposts_admin' blog.id %}'" role="button">Ver posts</a>
       </div>
     </main>
     <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     </body>
-    {% endif %}
+    {% else %}
+      {% load static %}
+      <figure class="mb-4"><div style="text-align: center;"><img class="img-fluid rounded" src="{% static 'base/assets/img/notfound.png' %}" alt="..." /></figure></div>
+      <br><br>
+      <div style="text-align: center;"><h1>UPS! No hay nada que mostrar aún</h1></div>
+    {% endif %}  
 {% endblock %}

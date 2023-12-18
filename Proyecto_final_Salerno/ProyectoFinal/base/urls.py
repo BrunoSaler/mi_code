@@ -25,12 +25,16 @@ urlpatterns = [
     path("menu/edit_avatar/", view_avatar),
     path("menu/new_blog/", view_crear_blog),
     path("menu/all_blogs_admin/", view_ver_blogs_admin),
-    path("menu/all_blogs/", view_ver_blogs),
+    path("pages/", view_ver_blogs),
     path("menu/detailblog_admin/<int:id>/", view_detailblog_admin, name="detailblog_admin"),
-    path("menu/detailblog/<int:id>/", view_detailblog, name="blog_detalle"),
+    path("pages/<int:id>/", view_detailblog, name="blog_detalle"),
     path("menu/editblog/<int:id>/", view_edit_blog, name="edit-blog"),
     path("menu/deleteblog/<int:id>/", view_deleteblog, name="borrar-blog"),
-
+    path("menu/detailblog_admin/<int:id>/newpost/", view_crear_post, name="newpost"),
+    path("menu/detailblog_admin/<int:id>/view_posts_admin/", view_verposts_admin, name="viewposts_admin"),
+    path("pages/<int:id>/view_posts", view_verposts, name="viewposts"),
+    path("menu/detailblog_admin/editpost/<int:id>", view_editar_post, name="editpost"),
+    path("menu/detailblog_admin/deletepost/<int:id>", view_deletepost, name="deletepost"),
     
     
 
