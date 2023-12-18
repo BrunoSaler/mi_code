@@ -1,4 +1,3 @@
-from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -765,6 +764,7 @@ def view_ver_comentarios(request,id):
     }
     return render(request, "base/ver_comentarios.html", diccionario)
 
+@login_required
 def view_crear_comentario(request,id):
     post = models.Post.objects.get(id=id)
     usuario = request.user
@@ -778,10 +778,10 @@ def view_crear_comentario(request,id):
             comentario = models.Comentario(autor=autor, post=post, fecha=fecha, comentario=comment)
             comentario.save()
             messages.success(request, "Comentario agregado.")
-            return redirect(ruta)#tengo que lograr que esto sea la vista de comments
+            return redirect(ruta)
         else:
             messages.error(request, "Intentelo nuevamente en unos minutos.")
-            return redirect(ruta)#tengo que lograr que esto sea la vista de comments
+            return redirect(ruta)
     else:
         form = forms.CommentForm()
         if request.user.is_authenticated:
