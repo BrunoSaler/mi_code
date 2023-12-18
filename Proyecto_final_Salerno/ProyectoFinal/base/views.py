@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -5,6 +6,8 @@ from django.utils import timezone
 from datetime import date
 from . import models, forms
 from django.contrib.auth.models import User
+
+ruta=None
 
 def date_format(date):
     months = ("Enero", "Febrero", "Marzo", "Abri", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre")
@@ -742,8 +745,10 @@ def view_deletepost(request, id):
 
 @login_required
 def view_ver_comentarios(request,id):
+    global ruta
     post = models.Post.objects.get(id=id)
-    comentarios = []   
+    comentarios = []
+    ruta = request.path 
     for i in models.Comentario.objects.filter(post=post):
         comentarios.append(i)
     if request.user.is_authenticated:
@@ -755,14 +760,13 @@ def view_ver_comentarios(request,id):
     diccionario = {
         'avatar_url': avatar_url,
         "comentarios": comentarios,
+        "id": id,
+        "titulo":post.titulo,
     }
     return render(request, "base/ver_comentarios.html", diccionario)
 
-"""def view_crear_comentario(request,string):
-    stringlimpio=string[1:-1]
-    breakpoint()
-    aux = get_object_or_404(models.Post,titulo=stringlimpio)
-    post = aux.pk
+def view_crear_comentario(request,id):
+    post = models.Post.objects.get(id=id)
     usuario = request.user
     if request.method == "POST":
         form = forms.CommentForm(request.POST)
@@ -774,10 +778,10 @@ def view_ver_comentarios(request,id):
             comentario = models.Comentario(autor=autor, post=post, fecha=fecha, comentario=comment)
             comentario.save()
             messages.success(request, "Comentario agregado.")
-            return redirect("/menu/all_blogs_admin")
+            return redirect(ruta)#tengo que lograr que esto sea la vista de comments
         else:
             messages.error(request, "Intentelo nuevamente en unos minutos.")
-            return redirect("/menu/all_blogs_admin")
+            return redirect(ruta)#tengo que lograr que esto sea la vista de comments
     else:
         form = forms.CommentForm()
         if request.user.is_authenticated:
@@ -790,4 +794,4 @@ def view_ver_comentarios(request,id):
             'avatar_url': avatar_url,
             "form": form,
         }
-    return render(request, "base/newcomment.html", diccionario)"""
+    return render(request, "base/newcomment.html", diccionario)
